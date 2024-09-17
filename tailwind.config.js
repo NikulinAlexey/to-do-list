@@ -2,10 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    colors: {
+      normal: "#289c00",
+      medium: "yellow",
+      high: "#a80000",
+    },
     extend: {
       boxShadow: {
-        "task-active":
-          "-40px -40px 40px -20px rgba(174, 197, 214, 0.2), 40px 40px 40px -20px rgba(6, 23, 36, 0.2)",
+        primary: "0px 0px 12px 4px rgba(148, 173, 207, 0.2)",
       },
     },
   },
