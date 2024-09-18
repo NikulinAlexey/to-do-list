@@ -6,6 +6,9 @@ export default {
       normal: "#289c00",
       medium: "yellow",
       high: "#a80000",
+      transparent: "transparent",
+      first: "#38404B",
+      second: "#94ADCF",
     },
     extend: {
       boxShadow: {

@@ -7,13 +7,14 @@ interface TaskProps {
     text: string;
     id: number;
   };
+  deleteTask: (id: number) => void;
 }
-function Task({ task }: TaskProps) {
+function Task({ task, deleteTask }: TaskProps) {
   // const time = useGetTime();
   // const { dayOfMonth, monthOfYear } = time;
 
-  const { text, priority } = task;
-  
+  const { text, priority, id } = task;
+
   return (
     <div className="relative rounded-2xl shadow-primary overflow-hidden ">
       <PriorityMark priority={priority} />
@@ -24,7 +25,12 @@ function Task({ task }: TaskProps) {
         </div>
         <div className="flex gap-4 items-center ml-4">
           <input type="checkbox" className="h-6 w-6" />
-          <button type="button" className="" aria-label="Удалить задание">
+          <button
+            type="button"
+            className=""
+            aria-label="Удалить задание"
+            onClick={() => deleteTask(id)}
+          >
             <TrashIcon />
           </button>
         </div>

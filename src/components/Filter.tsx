@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 
 import { cn } from "../libs/utils";
 
@@ -9,17 +9,17 @@ interface FilterProps {
 }
 
 function Filter({ className }: FilterProps) {
-  const { activeBtn, setActiveBtn } = useState(0);
+  const [activeBtn, setActiveBtn] = useState(0);
 
   return (
     <ul className={cn("flex gap-4 justify-center px-4 mb-8", className)}>
       <li>
         <button
           id="0"
-          onClick={() => {}}
+          onClick={(e) => setActiveBtn(Number(e.target.id))}
           type="button"
           className={cn("", {
-            "text-[gray]": activeBtn === 0,
+            "text-[red]": activeBtn === 0,
           })}
         >
           Все
@@ -27,10 +27,11 @@ function Filter({ className }: FilterProps) {
       </li>
       <li>
         <button
-          onClick={() => {}}
+          id="1"
+          onClick={(e) => setActiveBtn(Number(e.target.id))}
           type="button"
           className={cn("", {
-            "text-[gray]": activeBtn === 1,
+            "text-[red]": activeBtn === 1,
           })}
         >
           Активные
@@ -38,10 +39,11 @@ function Filter({ className }: FilterProps) {
       </li>
       <li>
         <button
-          onClick={() => {}}
+          id="2"
+          onClick={(e) => setActiveBtn(Number(e.target.id))}
           type="button"
           className={cn("", {
-            "text-[gray]": activeBtn === 2,
+            "text-[red]": activeBtn === 2,
           })}
         >
           Завершенные
