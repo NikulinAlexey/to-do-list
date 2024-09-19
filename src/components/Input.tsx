@@ -19,6 +19,7 @@ function Input({ className, type, value, handleChange }: InputProps) {
       )}
     >
       <input
+        required
         onChange={(e) => handleChange(e.target.value)}
         value={value}
         type={type || "text"}

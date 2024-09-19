@@ -6,7 +6,6 @@ interface PriorityMarkProps {
 }
 
 function PriorityMark({ priority, className }: PriorityMarkProps) {
-  console.log(priority);
 
   return (
     <div
