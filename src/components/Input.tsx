@@ -1,31 +1,14 @@
-"use client";
+import { InputProps } from "../types";
 
-
-import { cn } from "../libs/utils";
-
-interface InputProps {
-  className?: string;
-  type?: string;
-  value: string | undefined;
-  handleChange: (value: string) => void;
-}
-
-function Input({ className, type, value, handleChange }: InputProps) {
+function Input({ value, handleChange }: InputProps) {
   return (
-    <div
-      className={cn(
-        "h-14 border-second border-2 rounded-md p-2 focus-within",
-        className
-      )}
-    >
-      <input
-        required
-        onChange={(e) => handleChange(e.target.value)}
-        value={value}
-        type={type || "text"}
-        className="h-full w-full bg-transparent"
-      />
-    </div>
+    <input
+      required
+      value={value}
+      type="text"
+      onChange={(e) => handleChange(e.target.value)}
+      className="w-full bg-transparent border-second border-2 rounded-md p-2"
+    />
   );
 }
 

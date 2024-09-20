@@ -1,72 +1,44 @@
 "use client";
 
-import { cn } from "../libs/utils";
 import { useState } from "react";
-
+import { cn } from "../libs/utils";
+import { AddFormProps } from "../types";
 import useGetTime from "../hooks/useGetTime";
 
 import Input from "./Input";
+import Select from "./Select";
 
-interface AddFormProps {
-  className?: string;
-  addTask: (newTask) => void;
-  tasks: {
-    priority: string;
-    text: string;
-    id: number;
-    finished: boolean;
-    crearedAt: {
-      minutes: number;
-      hours: number;
-      seconds: number;
-      dayOfWeek: string;
-      month: string;
-      year: number;
-      dayOfMonth: number;
-    };
-  }[];
-}
-
-function AddForm({ className, addTask, tasks }: AddFormProps) {
+function AddForm({ addTask }: AddFormProps) {
   const createdAt = useGetTime();
-  const [taskValue, setTaskValue] = useState<string>("");
-  const [priority, setPriority] = useState("normal");
 
-  function handleAddTask(e: Event) {
-    e.preventDefault();
+  const [priorityValue, setPriorityValue] = useState("normal");
+  const [taskValue, setTaskValue] = useState<string>("");
+
+  function handleAddTask(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
     addTask({
-      text: taskValue,
-      id: tasks?.length + 1,
       priority,
-      finished: false,
       createdAt,
+      text: taskValue,
+      finished: false,
+      id: Math.random().toString(16).slice(2),
     });
 
-    setTaskValue("");
-    // e.target.reset();
+    event.currentTarget.reset();
   }
 
   return (
     <form
-      className={cn("flex mb-8 justify-center gap-x-4", className)}
-      onSubmit={(e: never) => handleAddTask(e)}
+      onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleAddTask(event)}
+      className="flex mb-8 justify-center gap-x-4"
     >
-      <select
-        name="priority"
-        id="priority-select"
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-      >
-        <option value="normal">Обычный</option>
-        <option value="medium">Средний</option>
-        <option value="high">Высокий</option>
-      </select>
+      <Select value={priorityValue} handleChange={setPriorityValue} />
       <Input value={taskValue} handleChange={setTaskValue} />
       <button
-        disabled={taskValue?.length === 0}
         type="submit"
         aria-label="Добавить задание"
+        disabled={taskValue?.length === 0}
         className={cn("", {
           "opacity-50 cursor-not-allowed": taskValue?.length === 0,
         })}

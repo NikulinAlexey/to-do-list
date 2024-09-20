@@ -1,13 +1,6 @@
 import Task from "./Task";
 
-interface TaskListProps {
-  tasks: {
-    text: string;
-    id: number;
-    priority: string;
-  }[];
-  deleteTask: (id:number) => void;
-}
+import { TaskListProps } from "../types";
 
 function TaskList({tasks, deleteTask}: TaskListProps) {
   return (

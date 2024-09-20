@@ -1,28 +1,8 @@
 import PriorityMark from "./PriorityMark";
 import TrashIcon from "./TrashIcon";
+import { TaskProps } from "../types";
 
-interface TaskProps {
-  task: {
-    priority: string;
-    text: string;
-    id: number;
-    finished: boolean;
-    createdAt: {
-      minutes: number;
-      hours: number;
-      seconds: number;
-      dayOfWeek: string;
-      month: string;
-      year: number;
-      dayOfMonth: number;
-    };
-  };
-  deleteTask: (id: number) => void;
-}
-function Task({ task, deleteTask }: TaskProps) {
-  // const time = useGetTime();
-  // const { dayOfMonth, monthOfYear } = time;
-
+function Task({ deleteTask, ...task }: TaskProps) {
   const { text, priority, id, createdAt } = task;
   const { minutes, hours, seconds, dayOfWeek, month, year, dayOfMonth } = createdAt;
 

@@ -1,73 +1,33 @@
-import { useEffect, useState } from "react";
-import AddForm from "./AddForm";
+import { useState } from "react";
+import { TaskProps } from "../types";
+
 import Filter from "./Filter";
+import AddForm from "./AddForm";
 import TaskList from "./TaskList";
 
-
-
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      text: "Сделать дело",
-      id: 0,
-      priority: "normal",
-      finished: true,
-      createdAt: {
-        minutes: 10,
-        hours: 4,
-        seconds: 12,
-        dayOfWeek: "Вторник",
-        month: "Сент",
-        year: 2024,
-        dayOfMonth: 2,
-      },
-    },
-    {
-      text: "Гулять смело",
-      id: 1,
-      priority: "high",
-      finished: true,
-      createdAt: {
-        minutes: 10,
-        hours: 4,
-        seconds: 12,
-        dayOfWeek: "Вторник",
-        month: "Сент",
-        year: 2024,
-        dayOfMonth: 2,
-      },
-    },
-    {
-      text: "Покушац",
-      id: 2,
-      priority: "medium",
-      finished: false,
-      createdAt: {
-        minutes: 10,
-        hours: 4,
-        seconds: 12,
-        dayOfWeek: "Вторник",
-        month: "Сент",
-        year: 2024,
-        dayOfMonth: 2,
-      },
-    },
-  ]);
+  const [tasks, setTasks] = useState<TaskProps[]>([]);
 
-  function addTask(newTask) {
-    console.log(newTask, "added")
-    setTasks(tasks.concat([newTask]));
+  function addTask(newTask: TaskProps) {
+    setTasks(tasks.concat(newTask));
   }
-  function deleteTask(id: number) {
-    setTasks(tasks.filter((task => task.id !== id)))
+  function deleteTask(id: string) {
+    setTasks(tasks.filter((task) => task.id !== id));
   }
-  
+
   return (
-    <div className="h-full w-[50%] mx-auto mt-6">
+    <div className="relative h-full w-[50%] mx-auto mt-6">
       <Filter />
-      <AddForm addTask={addTask} />
+      <AddForm addTask={addTask} key={tasks.length} />
       <TaskList tasks={tasks} deleteTask={deleteTask} />
-      <span>Сделать функцию-генератор уникального id</span>
+      <ul className="fixed text-[black] top-0 left-0 flex flex-col gap-4 p-10 max-w-[300px]">
+        <li className="bg-[aqua] p-4 rounded-lg">
+          Сделать функция-фильтры для выбора всех, активных, завершенных
+        </li>
+        <li className="bg-[aqua] p-4 rounded-lg">Сделать работающий чекбокс</li>
+        <li className="bg-[aqua] p-4 rounded-lg">Сделать адаптив</li>
+        <li className="bg-[aqua] p-4 rounded-lg">Прибрать типы TS</li>
+      </ul>
     </div>
   );
 }

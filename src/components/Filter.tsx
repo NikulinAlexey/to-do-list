@@ -1,22 +1,20 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 
 import { cn } from "../libs/utils";
 
-interface FilterProps {
-  className?: string;
-}
-
-function Filter({ className }: FilterProps) {
+function Filter() {
   const [activeBtn, setActiveBtn] = useState(0);
 
   return (
-    <ul className={cn("flex gap-4 justify-center px-4 mb-8", className)}>
+    <ul className="flex gap-4 justify-center px-4 mb-8">
       <li>
         <button
           id="0"
-          onClick={(e) => setActiveBtn(Number(e.target.id))}
+          onClick={(event: React.MouseEvent<HTMLElement>) =>
+            setActiveBtn(Number(event.currentTarget.id))
+          }
           type="button"
           className={cn("", {
             "text-[red]": activeBtn === 0,
@@ -28,7 +26,9 @@ function Filter({ className }: FilterProps) {
       <li>
         <button
           id="1"
-          onClick={(e) => setActiveBtn(Number(e.target.id))}
+          onClick={(event: React.MouseEvent<HTMLElement>) =>
+            setActiveBtn(Number(event.currentTarget.id))
+          }
           type="button"
           className={cn("", {
             "text-[red]": activeBtn === 1,
@@ -40,7 +40,9 @@ function Filter({ className }: FilterProps) {
       <li>
         <button
           id="2"
-          onClick={(e) => setActiveBtn(Number(e.target.id))}
+          onClick={(event: React.MouseEvent<HTMLElement>) =>
+            setActiveBtn(Number(event.currentTarget.id))
+          }
           type="button"
           className={cn("", {
             "text-[red]": activeBtn === 2,
