@@ -1,18 +1,3 @@
-interface OneTask {
-  priority: string;
-  text: string;
-  id: string;
-  finished: boolean;
-  createdAt: {
-    minutes: number;
-    hours: number;
-    seconds: number;
-    dayOfWeek: string;
-    month: string;
-    year: number;
-    dayOfMonth: number;
-  };
-}
 export interface TaskProps {
   priority: string;
   text: string;
@@ -27,11 +12,10 @@ export interface TaskProps {
     year: number;
     dayOfMonth: number;
   };
-  deleteTask: (id: string) => void;
 }
 
 export interface TaskListProps {
-  tasks: OneTask[];
+  tasks: TaskProps[];
   deleteTask: (id: string) => void;
 }
 
@@ -47,4 +31,8 @@ export interface AddFormProps {
 export interface InputProps {
   value: string;
   handleChange: (value: string) => void;
+}
+
+export interface FilterProps {
+  onFilter: (tag: string) => void;
 }

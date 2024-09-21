@@ -3,21 +3,25 @@
 import { useState } from "react";
 
 import { cn } from "../libs/utils";
+import { FilterProps } from "../types";
 
-function Filter() {
-  const [activeBtn, setActiveBtn] = useState(0);
+function Filter({ onFilter }: FilterProps) {
+  const [activeBtn, setActiveBtn] = useState<string>("all");
+
+  function setActiveTab(tag: string, event: React.MouseEvent<HTMLElement>) {
+    setActiveBtn(event.currentTarget.id)
+    onFilter(tag);
+  }
 
   return (
     <ul className="flex gap-4 justify-center px-4 mb-8">
       <li>
         <button
-          id="0"
-          onClick={(event: React.MouseEvent<HTMLElement>) =>
-            setActiveBtn(Number(event.currentTarget.id))
-          }
+          id="all"
+          onClick={(event) => setActiveTab(event.currentTarget.id, event)}
           type="button"
           className={cn("", {
-            "text-[red]": activeBtn === 0,
+            "text-[red]": activeBtn === "all",
           })}
         >
           Все
@@ -25,13 +29,11 @@ function Filter() {
       </li>
       <li>
         <button
-          id="1"
-          onClick={(event: React.MouseEvent<HTMLElement>) =>
-            setActiveBtn(Number(event.currentTarget.id))
-          }
+          id="active"
+          onClick={(event) => setActiveTab(event.currentTarget.id, event)}
           type="button"
           className={cn("", {
-            "text-[red]": activeBtn === 1,
+            "text-[red]": activeBtn === "active",
           })}
         >
           Активные
@@ -39,13 +41,11 @@ function Filter() {
       </li>
       <li>
         <button
-          id="2"
-          onClick={(event: React.MouseEvent<HTMLElement>) =>
-            setActiveBtn(Number(event.currentTarget.id))
-          }
+          id="finished"
+          onClick={(event) => setActiveTab(event.currentTarget.id, event)}
           type="button"
           className={cn("", {
-            "text-[red]": activeBtn === 2,
+            "text-[red]": activeBtn === "finished",
           })}
         >
           Завершенные

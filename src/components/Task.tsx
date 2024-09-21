@@ -2,9 +2,15 @@ import PriorityMark from "./PriorityMark";
 import TrashIcon from "./TrashIcon";
 import { TaskProps } from "../types";
 
-function Task({ deleteTask, ...task }: TaskProps) {
-  const { text, priority, id, createdAt } = task;
-  const { minutes, hours, seconds, dayOfWeek, month, year, dayOfMonth } = createdAt;
+export interface TaskItemProps {
+  taskItem: TaskProps;
+  deleteTask: (id: string) => void;
+}
+
+function Task({ deleteTask, taskItem }: TaskItemProps) {
+  const { text, priority, id, createdAt } = taskItem;
+  const { minutes, hours, seconds, dayOfWeek, month, year, dayOfMonth } =
+    createdAt;
 
   return (
     <div className="relative rounded-2xl shadow-primary overflow-hidden ">

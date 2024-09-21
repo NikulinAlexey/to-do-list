@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "../libs/utils";
 import { AddFormProps } from "../types";
+
 import useGetTime from "../hooks/useGetTime";
 
 import Input from "./Input";
@@ -18,7 +19,7 @@ function AddForm({ addTask }: AddFormProps) {
     event.preventDefault();
 
     addTask({
-      priority,
+      priority: priorityValue,
       createdAt,
       text: taskValue,
       finished: false,
