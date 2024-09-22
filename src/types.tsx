@@ -16,6 +16,7 @@ export interface TaskProps {
 
 export interface TaskListProps {
   tasks: TaskProps[];
+  finishTask: (id: string) => void;
   deleteTask: (id: string) => void;
 }
 

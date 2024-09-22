@@ -7,7 +7,7 @@ function Input({ value, handleChange }: InputProps) {
       value={value}
       type="text"
       onChange={(e) => handleChange(e.target.value)}
-      className="w-full bg-transparent border-second border-2 rounded-md p-2"
+      className="w-full bg-transparent border-second border rounded-md p-2"
     />
   );
 }

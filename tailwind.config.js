@@ -14,6 +14,9 @@ export default {
       boxShadow: {
         primary: "0px 0px 12px 4px rgba(148, 173, 207, 0.2)",
       },
+      gridTemplateColumns: {
+        form: "1fr 3fr 1fr",
+      }
     },
   },
   plugins: [],

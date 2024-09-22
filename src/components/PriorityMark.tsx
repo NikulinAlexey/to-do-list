@@ -8,14 +8,14 @@ interface PriorityMarkProps {
 function PriorityMark({ priority, className }: PriorityMarkProps) {
 
   return (
-    <div
-      className={cn("absolute w-3 inset-y-0 bg-normal", className,
+    <span
+      className={cn("absolute block w-3 inset-y-0 bg-normal", className,
         {
         "bg-medium": priority === "medium",
         "bg-high": priority === "high",
         }
       )}
-    ></div>
+    ></span>
   );
 }
 
