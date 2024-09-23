@@ -22,27 +22,28 @@ function Task({ deleteTask, finishTask, taskItem }: TaskItemProps) {
   }
 
   return (
-    <div className="relative rounded-2xl shadow-primary overflow-hidden ">
+    <div className="relative rounded-2xl shadow-primary overflow-hidden w-full">
       <PriorityMark priority={priority} />
       <div className="flex justify-between items-center pl-6 py-3 pr-3">
-        <div className="flex flex-col gap-y-2 grow">
-          <div className="text-lg">{text}</div>
+        <div className="flex flex-col gap-y-2 grow max-w-[calc(100%-100%/6-16px)]">
+          <div className="text-lg break-words">{text}</div>
           <div className="text-xs text-[gray]">
             {`${dayOfMonth} ${month} ${year}, ${dayOfWeek}, ${hours}:${minutes}:${seconds}`}
           </div>
         </div>
-        <div className="flex gap-4 items-center ml-4">
+        <div className="flex gap-4 items-center pl-4 justify-end">
           {!finished ? (
             <>
               <input
+                aria-label="Отметить задание как выполненное"
                 checked={checked}
                 type="checkbox"
-                className="h-6 w-6"
+                className="relative h-6 w-6 after:absolute after:inset-[-6px]"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleCheck(e)}
               />
               <button
                 type="button"
-                className=""
+                className="relative after:absolute after:inset-[-2px]"
                 aria-label="Удалить задание"
                 onClick={() => deleteTask(id)}
               >
@@ -50,7 +51,7 @@ function Task({ deleteTask, finishTask, taskItem }: TaskItemProps) {
               </button>
             </>
           ) : (
-            "Задание выполнено"
+            <div className="">Задание выполнено</div>
           )}
         </div>
       </div>

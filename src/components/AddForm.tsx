@@ -35,7 +35,7 @@ function AddForm({ addTask }: AddFormProps) {
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
         handleAddTask(event)
       }
-      className="grid grid-cols-form mb-8 justify-center gap-x-4"
+      className="flex flex-col lg:grid lg:grid-cols-form mb-8 justify-center gap-4"
     >
       <Select value={priorityValue} handleChange={setPriorityValue} />
       <Input value={taskValue} handleChange={setTaskValue} />
@@ -43,9 +43,12 @@ function AddForm({ addTask }: AddFormProps) {
         type="submit"
         aria-label="Добавить задание"
         disabled={taskValue?.length === 0}
-        className={cn("border-second border rounded-md", {
-          "opacity-50 cursor-not-allowed": taskValue?.length === 0,
-        })}
+        className={cn(
+          "border-second border rounded-md p-2",
+          {
+            "opacity-50 cursor-not-allowed": taskValue?.length === 0,
+          }
+        )}
       >
         Добавить
       </button>

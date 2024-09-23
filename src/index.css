@@ -13,6 +13,7 @@
 
 *:focus-visible {
   outline: 1px solid var(--c-typo-color);
+  box-shadow: 4px 4px 30px 11px rgba(148, 173, 207, 0.2);
 }
 
 body {
@@ -27,4 +28,6 @@ body {
 #root {
   min-height: 100dvh;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }

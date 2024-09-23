@@ -161,7 +161,7 @@ function App() {
   }
 
   return (
-    <div className="relative h-full w-[50%] mx-auto mt-6">
+    <div className="relative p-4 w-full md:max-w-[70%] lg:max-w-[50%]">
       <Filter onFilter={setFilteredTasks} />
       <AddForm addTask={addTask} />
       <TaskList
@@ -171,8 +171,20 @@ function App() {
         finishTask={finishTask}
       />
       <ul className="fixed text-[black] top-0 left-0 flex flex-col gap-4 p-10 max-w-[300px]">
-        <li className="bg-[aqua] p-4 rounded-lg">Сделать адаптив</li>
-        <li className="bg-[aqua] p-4 rounded-lg">Подумать как отображать таски, если я добавляю ее в активные или в завершенные</li>
+        <li className="bg-[aqua] p-4 rounded-lg">
+          Подумать как отображать таски, если я добавляю ее в активные или в
+          завершенные
+        </li>
+        <li className="bg-[aqua] p-4 rounded-lg">
+          При фильтрации по цветам при удалении отрисовываются все картчки
+        </li>
+        <li className="bg-[aqua] p-4 rounded-lg">
+          Если удаление происходит: 1. В теге "активные", то нужно мгновенно
+          убрать из списка это задание
+        </li>
+        <li className="bg-[aqua] p-4 rounded-lg">
+          Убрать возможность добавлять таску через форму в завершенные
+        </li>
       </ul>
     </div>
   );
