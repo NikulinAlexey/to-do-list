@@ -6,7 +6,7 @@ function Input({ value, handleChange }: InputProps) {
       required
       value={value}
       type="text"
-      placeholder="Задание..."
+      placeholder="Напишите задание..."
       onChange={(e) => handleChange(e.target.value)}
       className="w-full h-full bg-transparent border-second border rounded-md p-2 placeholder:text-sm"
     />

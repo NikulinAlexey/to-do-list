@@ -9,10 +9,12 @@ export default {
       transparent: "transparent",
       first: "#38404B",
       second: "#94ADCF",
+      third: "#7588a3",
     },
     extend: {
       boxShadow: {
-        primary: "0px 0px 12px 4px rgba(148, 173, 207, 0.2)",
+        primary: "0px 0px 6px 4px rgba(148, 173, 207, 0.5)",
+        secondary: "0px 0px 6px 4px rgba(148, 173, 207, 0.1)",
       },
       gridTemplateColumns: {
         form: "1fr 3fr 1fr",

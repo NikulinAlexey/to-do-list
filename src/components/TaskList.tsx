@@ -1,15 +1,17 @@
 import Task from "./Task";
-import { TaskListProps } from "../types";
+import { TaskProps } from "../types";
 
-function TaskList({ tasks, deleteTask, finishTask }: TaskListProps) {
+interface TaskListProps {
+  tasks: TaskProps[];
+}
+
+function TaskList({ tasks }: TaskListProps) {
   return (
     <ul className="flex flex-col gap-4 w-full">
       {tasks.length !== 0 ? (tasks.map((task) => (
         <li key={task.id} className="w-full">
           <Task
             taskItem={task}
-            deleteTask={deleteTask}
-            finishTask={finishTask}
           />
         </li>
       ))) : (

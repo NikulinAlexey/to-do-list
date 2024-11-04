@@ -1,58 +1,65 @@
 import { TaskProps } from "../types";
-import { useState, ChangeEvent } from "react";
+import { cn } from "../libs/utils";
 
-import TrashIcon from "./TrashIcon";
+import SvgIcon from "./SvgIcon";
 import PriorityMark from "./PriorityMark";
+import { useDispatch } from "react-redux";
+import { deleteTask, finishTask } from "../state/taskListSlice";
 
 export interface TaskItemProps {
   taskItem: TaskProps;
-  finishTask: (id: string) => void;
-  deleteTask: (id: string) => void;
 }
 
-function Task({ deleteTask, finishTask, taskItem }: TaskItemProps) {
-  const [checked, setChecked] = useState(false);
+function Task({ taskItem }: TaskItemProps) {
   const { text, priority, finished, id, createdAt } = taskItem;
-  const { minutes, hours, seconds, dayOfWeek, month, year, dayOfMonth } =
-    createdAt;
+  const dispatch = useDispatch();
 
-  function handleCheck(e: ChangeEvent<HTMLInputElement>) {
-    setChecked(e.target.checked);
-    finishTask(id);
+  function handleCheck() {
+    dispatch(finishTask({ id, finished: !finished }));
+  }
+
+  function handleDeleteTask() {
+    dispatch(deleteTask({ id }));
   }
 
   return (
-    <div className="relative rounded-2xl shadow-primary overflow-hidden w-full">
+    <div
+      className={cn(
+        "relative rounded-2xl shadow-primary overflow-hidden w-full transition-[transform,box-shadow] duration-300",
+        { "shadow-secondary -translate-y-[1px]": finished }
+      )}
+    >
       <PriorityMark priority={priority} />
-      <div className="flex justify-between items-center pl-6 py-3 pr-3">
-        <div className="flex flex-col gap-y-2 grow max-w-[calc(100%-100%/6-16px)]">
-          <div className="text-lg break-words">{text}</div>
-          <div className="text-xs text-[gray]">
-            {`${dayOfMonth} ${month} ${year}, ${dayOfWeek}, ${hours}:${minutes}:${seconds}`}
+      <div className="flex flex-col gap-x-2 gap-y-4 pl-6 py-3 pr-3">
+        <p className="text-lg break-words">{text}</p>
+        <div className="flex justify-between items-center min-h-6 gap-x-8">
+          <p className="h-full text-xs text-[gray]">{createdAt}</p>
+          <div className="text-third flex text-sm shrink-0 gap-4 h-full items-center justify-end">
+            {!finished ? (
+              <>
+                <label className="flex items-center gap-2 cursor-pointer select-none h-full lg:hover:opacity-80 active:!opacity-50 transition-opacity">
+                  Завершить
+                  <input
+                    aria-label="Отметить задание как выполненное"
+                    checked={finished}
+                    type="checkbox"
+                    className="h-6 w-6 cursor-pointer absolute opacity-0"
+                    onChange={handleCheck}
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="w-6 h-6 lg:hover:opacity-80 active:!opacity-50 transition-opacity"
+                  aria-label="Удалить задание"
+                  onClick={handleDeleteTask}
+                >
+                  <SvgIcon name="trash" />
+                </button>
+              </>
+            ) : (
+              "Задание выполнено"
+            )}
           </div>
-        </div>
-        <div className="flex gap-4 items-center pl-4 justify-end">
-          {!finished ? (
-            <>
-              <input
-                aria-label="Отметить задание как выполненное"
-                checked={checked}
-                type="checkbox"
-                className="relative h-6 w-6 after:absolute after:inset-[-6px]"
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleCheck(e)}
-              />
-              <button
-                type="button"
-                className="relative after:absolute after:inset-[-2px]"
-                aria-label="Удалить задание"
-                onClick={() => deleteTask(id)}
-              >
-                <TrashIcon />
-              </button>
-            </>
-          ) : (
-            <div className="">Задание выполнено</div>
-          )}
         </div>
       </div>
     </div>
