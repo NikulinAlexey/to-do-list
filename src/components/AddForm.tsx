@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "../libs/utils";
-// import { AddFormProps } from "../types";
-
-import useGetTime from "../hooks/useGetTime";
 import { useDispatch } from "react-redux";
+import useGetTime from "../hooks/useGetTime";
 
 import Input from "./Input";
 import Select from "./Select";
@@ -15,8 +13,8 @@ function AddForm() {
   const createdAt = useGetTime();
   const dispatch = useDispatch();
 
-  const [priorityValue, setPriorityValue] = useState("normal");
   const [taskValue, setTaskValue] = useState<string>("");
+  const [priorityValue, setPriorityValue] = useState("normal");
 
   function handleAddTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,13 +28,6 @@ function AddForm() {
         id: Math.random().toString(16).slice(2),
       })
     );
-    // addTask({
-    //   priority: priorityValue,
-    //   createdAt,
-    //   text: taskValue,
-    //   finished: false,
-    //   id: Math.random().toString(16).slice(2),
-    // });
 
     setPriorityValue("normal");
     setTaskValue("");
@@ -47,7 +38,7 @@ function AddForm() {
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
         handleAddTask(event)
       }
-      className="flex flex-col lg:grid lg:grid-cols-form mb-8 justify-center gap-4"
+      className="flex flex-col lg:grid lg:grid-cols-form justify-center gap-4"
     >
       <Select value={priorityValue} handleChange={setPriorityValue} />
       <Input value={taskValue} handleChange={setTaskValue} />

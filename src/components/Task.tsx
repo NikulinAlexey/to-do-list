@@ -1,10 +1,10 @@
-import { TaskProps } from "../types";
 import { cn } from "../libs/utils";
+import { TaskProps } from "../types";
+import { useDispatch } from "react-redux";
+import { deleteTask, finishTask } from "../state/taskListSlice";
 
 import SvgIcon from "./SvgIcon";
 import PriorityMark from "./PriorityMark";
-import { useDispatch } from "react-redux";
-import { deleteTask, finishTask } from "../state/taskListSlice";
 
 export interface TaskItemProps {
   taskItem: TaskProps;
@@ -13,14 +13,6 @@ export interface TaskItemProps {
 function Task({ taskItem }: TaskItemProps) {
   const { text, priority, finished, id, createdAt } = taskItem;
   const dispatch = useDispatch();
-
-  function handleCheck() {
-    dispatch(finishTask({ id, finished: !finished }));
-  }
-
-  function handleDeleteTask() {
-    dispatch(deleteTask({ id }));
-  }
 
   return (
     <div
@@ -44,14 +36,16 @@ function Task({ taskItem }: TaskItemProps) {
                     checked={finished}
                     type="checkbox"
                     className="h-6 w-6 cursor-pointer absolute opacity-0"
-                    onChange={handleCheck}
+                    onChange={() =>
+                      dispatch(finishTask({ id, finished: !finished }))
+                    }
                   />
                 </label>
                 <button
                   type="button"
                   className="w-6 h-6 lg:hover:opacity-80 active:!opacity-50 transition-opacity"
                   aria-label="Удалить задание"
-                  onClick={handleDeleteTask}
+                  onClick={() => dispatch(deleteTask(id))}
                 >
                   <SvgIcon name="trash" />
                 </button>

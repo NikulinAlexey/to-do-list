@@ -1,19 +1,3 @@
-// export interface TaskProps {
-//   priority: string;
-//   text: string;
-//   id: string;
-//   finished: boolean;
-//   createdAt: {
-//     minutes: number;
-//     hours: number;
-//     seconds: number;
-//     dayOfWeek: string;
-//     month: string;
-//     year: number;
-//     dayOfMonth: number;
-//   };
-// }
-
 export interface TaskProps {
   priority: string;
   text: string;
@@ -33,9 +17,9 @@ export interface SelectProps {
   handleChange: (value: string) => void;
 }
 
-// export interface AddFormProps {
-//   addTask: (newTask: TaskProps) => void;
-// }
+export interface TaskItemProps {
+  taskItem: TaskProps;
+}
 
 export interface InputProps {
   value: string;
@@ -43,5 +27,5 @@ export interface InputProps {
 }
 
 export interface FilterProps {
-  onFilter: (tag: string) => void;
+  onFilter: (tasks: TaskProps[], tag: string) => void;
 }

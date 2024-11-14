@@ -6,16 +6,17 @@ interface TaskListProps {
 }
 
 function TaskList({ tasks }: TaskListProps) {
+
   return (
-    <ul className="flex flex-col gap-4 w-full">
-      {tasks.length !== 0 ? (tasks.map((task) => (
-        <li key={task.id} className="w-full">
-          <Task
-            taskItem={task}
-          />
-        </li>
-      ))) : (
-          <div className="">Список пуст</div>
+    <ul className="flex flex-col-reverse gap-4 w-full">
+      {tasks ? (
+        tasks.map((task) => (
+          <li key={task.id} className="w-full">
+            <Task taskItem={task} />
+          </li>
+        ))
+      ) : (
+        <div className="">Список пуст</div>
       )}
     </ul>
   );

@@ -1,50 +1,62 @@
+"use client";
+
+import { TaskProps } from "../types";
+import { RootState } from "../state/store";
+import { refreshTag } from "../state/currentTagSlice";
+import { useState, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import Filter from "./Filter";
 import AddForm from "./AddForm";
 import TaskList from "./TaskList";
-import { RootState } from "../state/store";
-
-import { useSelector } from "react-redux";
 
 function App() {
-  const tasks = useSelector((state: RootState) => state.todos);
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const currentTag = useSelector((state: RootState) => state.currentTag);
 
-  function filterTasks(tag: string) {
+  const [tasksToShow, setTasksToShow] = useState<TaskProps[]>(() =>
+    filterTasks(tasks, currentTag)
+  );
+
+  function filterTasks(array: TaskProps[], tag: string) {
     if (tag === "all") {
-      return tasks;
+      return array;
     } else if (tag === "active" || tag === "finished") {
       switch (tag) {
         case "active":
-          return tasks.filter((task) => task.finished === false);
+          return array.filter((task) => task.finished === false);
 
         case "finished":
-          return tasks.filter((task) => task.finished === true);
+          return array.filter((task) => task.finished === true);
 
         default:
-          return tasks;
+          return array;
       }
     } else {
-      return tasks.filter((task) => task.priority === tag);
+      return array.filter((task) => task.priority === tag);
     }
   }
 
-  function setFilteredTasks(tag: string) {
-    const filteredTasks = filterTasks(tag);
+  const setFilteredTasks = useCallback(
+    (array: TaskProps[], tag: string) => {
+      const filteredTasks = filterTasks(array, tag);
+      setTasksToShow(filteredTasks);
 
-    setTasksToShow(filteredTasks);
-  }
+      dispatch(refreshTag(tag));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    setFilteredTasks(tasks, currentTag);
+  }, [tasks, currentTag, setFilteredTasks]);
 
   return (
-    <div className="relative p-4 w-full md:max-w-[70%] lg:max-w-[50%]">
+    <div className="relative flex flex-col gap-y-6 mx-auto p-4 w-full md:max-w-[70%] lg:max-w-[50%]">
       <Filter onFilter={setFilteredTasks} />
       <AddForm />
-      <TaskList
-        key={tasks.length}
-        tasks={tasks}
-        // tasks={tasksToShow}
-      />
-      <ul className="fixed text-[black] top-0 left-0 flex flex-col gap-4 p-10 max-w-[300px]">
-        <li className="bg-[aqua] p-4 rounded-lg">1. Прикрутить Redux</li>
-      </ul>
+      <TaskList tasks={tasksToShow} />
     </div>
   );
 }

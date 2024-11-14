@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const todoSlice = createSlice({
-  name: "todos",
+export const tasksSlice = createSlice({
+  name: "tasks",
   initialState: [
     {
       priority: "normal",
@@ -63,30 +63,18 @@ export const todoSlice = createSlice({
   reducers: {
     addTask: (state, action) => {
       const task = action.payload;
-      // setTasks(tasks.concat(newTask));
-
-      // setTasksToShow(tasksToShow.concat(newTask));
       state.push(task);
     },
     finishTask: (state, action) => {
       const index = state.findIndex((todo) => todo.id === action.payload.id);
       state[index].finished = action.payload.finished;
-
-      // return state.filter((todo) => {
-      //   if (todo.id !== action.payload.id) return todo;
-      //   else {
-      //     todo.finished = true;
-
-      //     return todo;
-      //   }
-      // });
     },
     deleteTask: (state, action) => {
-      return state.filter((todo) => todo.id !== action.payload.id);
+      return state.filter((todo) => todo.id !== action.payload);
     },
   },
 });
 
-export const { addTask, deleteTask, finishTask } = todoSlice.actions;
+export const { addTask, deleteTask, finishTask } = tasksSlice.actions;
 
-export default todoSlice.reducer;
+export default tasksSlice.reducer;

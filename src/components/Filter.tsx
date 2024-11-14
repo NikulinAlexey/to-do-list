@@ -1,23 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { RootState } from "../state/store";
+import { useSelector } from "react-redux";
 
 import { cn } from "../libs/utils";
 import { FilterProps } from "../types";
 import PriorityMark from "./PriorityMark";
 
 function Filter({ onFilter }: FilterProps) {
-  const [activeBtn, setActiveBtn] = useState<string>("all");
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const currentTag = useSelector((state: RootState) => state.currentTag);
+  const [activeBtn, setActiveBtn] = useState(currentTag);
 
   function setActiveTab(tag: string, event: React.MouseEvent<HTMLElement>) {
     setActiveBtn(event.currentTarget.id);
-    onFilter(tag);
-
-    localStorage.setItem("currentTag", JSON.stringify(tag));
+    onFilter(tasks, tag);
   }
 
   return (
-    <div className="flex flex-wrap gap-y-1 gap-x-4 justify-center px-4 mb-8">
+    <div className="flex flex-wrap gap-y-1 gap-x-4 justify-center px-4">
       <div className="flex items-center justify-center ">
         <button
           id="all"
