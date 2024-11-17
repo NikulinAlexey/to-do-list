@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import tasksReducer from "./taskListSlice";
-import currentTagSlice from "./currentTagSlice";
+import statusTag from "./statusTag";
+import priorityTag from "./priorityTag";
 import storage from "redux-persist/lib/storage";
 import {
   persistStore,
@@ -15,7 +16,8 @@ import {
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
-  currentTag: currentTagSlice,
+  statusTag,
+  priorityTag,
 });
 const persistConfig = {
   key: "root",

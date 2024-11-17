@@ -3,6 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
+      "all-priorities": "#fff",
       normal: "#289c00",
       medium: "yellow",
       high: "#a80000",
@@ -29,4 +30,3 @@ export default {
   },
   plugins: [],
 };
-

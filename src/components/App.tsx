@@ -2,8 +2,9 @@
 
 import { TaskProps } from "../types";
 import { RootState } from "../state/store";
-import { refreshTag } from "../state/currentTagSlice";
-import { useState, useEffect, useCallback } from "react";
+import { refreshStatusTag } from "../state/statusTag";
+import { refreshPriorityTag } from "../state/priorityTag";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Filter from "./Filter";
@@ -13,44 +14,55 @@ import TaskList from "./TaskList";
 function App() {
   const dispatch = useDispatch();
   const tasks = useSelector((state: RootState) => state.tasks);
-  const currentTag = useSelector((state: RootState) => state.currentTag);
+  const statusTag = useSelector((state: RootState) => state.statusTag);
+  const priorityTag = useSelector((state: RootState) => state.priorityTag);
+  const filterTasks = (
+    tasks: TaskProps[],
+    statusTag: string,
+    priorityTag: string
+  ): TaskProps[] => {
+    if (!tasks || !Array.isArray(tasks)) return [];
 
-  const [tasksToShow, setTasksToShow] = useState<TaskProps[]>(() =>
-    filterTasks(tasks, currentTag)
-  );
+    const filteredByStatus = filterByStatus(tasks, statusTag);
+    const filteredByPriority = filterByPriority(filteredByStatus, priorityTag);
 
-  function filterTasks(array: TaskProps[], tag: string) {
-    if (tag === "all") {
-      return array;
-    } else if (tag === "active" || tag === "finished") {
-      switch (tag) {
-        case "active":
-          return array.filter((task) => task.finished === false);
+    return filteredByPriority;
+  };
 
-        case "finished":
-          return array.filter((task) => task.finished === true);
+  const filterByStatus = (
+    tasks: TaskProps[],
+    statusTag: string
+  ): TaskProps[] => {
+    if (statusTag === "all") return tasks;
+    if (statusTag === "finished") return tasks.filter((task) => task.finished);
+    if (statusTag === "active") return tasks.filter((task) => !task.finished);
+    return tasks;
+  };
 
-        default:
-          return array;
-      }
-    } else {
-      return array.filter((task) => task.priority === tag);
-    }
+  function filterByPriority(array: TaskProps[], priorityTag: string) {
+    if (priorityTag === "all-priorities") return array;
+    return array.filter((task) => task.priority === priorityTag);
   }
 
-  const setFilteredTasks = useCallback(
-    (array: TaskProps[], tag: string) => {
-      const filteredTasks = filterTasks(array, tag);
-      setTasksToShow(filteredTasks);
+  const setFilteredTasks = (
+    array: TaskProps[],
+    statusTag: string,
+    priorityTag: string
+  ) => {
+    const filteredTasks = filterTasks(array, statusTag, priorityTag);
+    setTasksToShow(filteredTasks);
 
-      dispatch(refreshTag(tag));
-    },
-    [dispatch]
+    dispatch(refreshStatusTag(statusTag));
+    dispatch(refreshPriorityTag(priorityTag));
+  };
+  const [tasksToShow, setTasksToShow] = useState<TaskProps[]>(
+    () => filterTasks(tasks, statusTag, priorityTag) || []
   );
 
   useEffect(() => {
-    setFilteredTasks(tasks, currentTag);
-  }, [tasks, currentTag, setFilteredTasks]);
+    setFilteredTasks(tasks, statusTag, priorityTag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks, statusTag, priorityTag]);
 
   return (
     <div className="relative flex flex-col gap-y-6 mx-auto p-4 w-full md:max-w-[70%] lg:max-w-[50%]">

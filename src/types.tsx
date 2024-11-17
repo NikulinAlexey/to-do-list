@@ -8,8 +8,6 @@ export interface TaskProps {
 
 export interface TaskListProps {
   tasks: TaskProps[];
-  finishTask: (id: string) => void;
-  deleteTask: (id: string) => void;
 }
 
 export interface SelectProps {
@@ -27,5 +25,9 @@ export interface InputProps {
 }
 
 export interface FilterProps {
-  onFilter: (tasks: TaskProps[], tag: string) => void;
+  onFilter: (
+    tasks: TaskProps[],
+    statusTag: string,
+    priorityTag: string
+  ) => void;
 }

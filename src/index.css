@@ -30,3 +30,7 @@ body {
   width: 100%;
   display: flex;
 }
+
+* {
+  scrollbar-width: thin;
+}
