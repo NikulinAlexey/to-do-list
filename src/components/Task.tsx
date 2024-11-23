@@ -23,7 +23,7 @@ function Task({ taskItem }: TaskItemProps) {
       const taskHeight = taskElement.offsetHeight;
 
       taskElement.className =
-        "-z-[1] opacity-0 invisible grow pointer-events-none relative bg-first rounded-2xl shadow-primary overflow-hidden w-full transition-[transform,visibility,box-shadow,opacity,margin-top] duration-300";
+        "-z-[1] opacity-0 invisible grow pointer-events-none relative bg-primary rounded-2xl shadow-active overflow-hidden w-full transition-[transform,visibility,box-shadow,opacity,margin-top] duration-300";
       taskElement.style.marginTop = `-${taskHeight+24}px`;
       setTimeout(() => dispatch(deleteTask(id)), 300);
     }
@@ -33,8 +33,8 @@ function Task({ taskItem }: TaskItemProps) {
     <div
       ref={taskRef}
       className={cn(
-        "relative bg-first rounded-2xl grow shadow-primary overflow-hidden w-full transition-[transform,visibility,box-shadow,opacity,margin-top] duration-300",
-        { "shadow-secondary -translate-y-[1px] opacity-50": finished }
+        "relative bg-primary rounded-2xl grow shadow-active overflow-hidden w-full transition-[transform,visibility,box-shadow,opacity,margin-top] duration-300",
+        { "shadow-disabled -translate-y-[1px] opacity-50": finished }
       )}
     >
       <PriorityMark priority={priority} />
@@ -42,7 +42,7 @@ function Task({ taskItem }: TaskItemProps) {
         <p className="text-lg break-words">{text}</p>
         <div className="flex flex-col items-start sm:flex-row sm:justify-between sm:items-center min-h-6 gap-y-1 gap-x-8">
           <p className="h-full text-xs text-[gray]">{createdAt}</p>
-          <div className="text-third flex text-sm shrink-0 gap-4 h-full items-center justify-end">
+          <div className="text-thirdly w-full flex text-sm shrink-0 gap-4 sm:w-fit h-full items-center justify-end">
             <label className="flex items-center gap-2 cursor-pointer select-none h-full lg:hover:opacity-80 active:!opacity-50 transition-opacity">
               {finished ? "Сделать активным" : "Завершить"}
               <input

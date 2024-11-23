@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { cn } from "../libs/utils";
 import { useDispatch } from "react-redux";
@@ -13,7 +11,7 @@ function AddForm() {
   const createdAt = useGetTime();
   const dispatch = useDispatch();
 
-  const [taskValue, setTaskValue] = useState<string>("");
+  const [taskTextValue, setTaskTextValue] = useState<string>("");
   const [priorityValue, setPriorityValue] = useState("normal");
 
   function handleAddTask(event: React.FormEvent<HTMLFormElement>) {
@@ -23,14 +21,14 @@ function AddForm() {
       addTask({
         priority: priorityValue,
         createdAt,
-        text: taskValue,
+        text: taskTextValue,
         finished: false,
         id: Math.random().toString(16).slice(2),
       })
     );
 
     setPriorityValue("normal");
-    setTaskValue("");
+    setTaskTextValue("");
   }
 
   return (
@@ -38,16 +36,16 @@ function AddForm() {
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
         handleAddTask(event)
       }
-      className="flex flex-col lg:grid lg:grid-cols-form justify-center gap-4"
+      className="flex flex-col lg:grid lg:grid-cols-form bg-primary justify-center gap-3"
     >
       <Select value={priorityValue} handleChange={setPriorityValue} />
-      <Input value={taskValue} handleChange={setTaskValue} />
+      <Input value={taskTextValue} handleChange={setTaskTextValue} />
       <button
         type="submit"
         aria-label="Добавить задание"
-        disabled={taskValue?.length === 0}
-        className={cn("border-second border rounded-md p-2", {
-          "opacity-50 cursor-not-allowed": taskValue?.length === 0,
+        disabled={taskTextValue?.length === 0}
+        className={cn("border-secondary border rounded-md p-2", {
+          "opacity-50 cursor-not-allowed": taskTextValue?.length === 0,
         })}
       >
         Добавить

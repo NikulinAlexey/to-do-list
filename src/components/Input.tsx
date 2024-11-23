@@ -8,7 +8,7 @@ function Input({ value, handleChange }: InputProps) {
       type="text"
       placeholder="Напишите задание..."
       onChange={(e) => handleChange(e.target.value)}
-      className="w-full h-full bg-transparent border-second border rounded-md p-2 placeholder:text-sm"
+      className="w-full h-full bg-transparent border-secondary border rounded-md p-2 placeholder:text-sm"
     />
   );
 }

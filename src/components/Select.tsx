@@ -10,13 +10,13 @@ function Select({ value, handleChange }: SelectProps) {
       onChange={(e) => handleChange(e.target.value)}
       className="border rounded-md bg-transparent p-2"
     >
-      <option value="normal" className="bg-first" aria-label="Обычный приоритет">
+      <option value="normal" className="bg-primary" aria-label="Обычный приоритет">
         Обычный
       </option>
-      <option value="medium" className="bg-first" aria-label="Средний приоритет">
+      <option value="medium" className="bg-primary" aria-label="Средний приоритет">
         Средний
       </option>
-      <option value="high" className="bg-first" aria-label="Высокий приоритет">
+      <option value="high" className="bg-primary" aria-label="Высокий приоритет">
         Высокий
       </option>
     </select>

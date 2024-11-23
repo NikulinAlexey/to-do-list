@@ -1,5 +1,3 @@
-"use client";
-
 import { TaskProps } from "../types";
 import { RootState } from "../state/store";
 import { refreshStatusTag } from "../state/statusTag";

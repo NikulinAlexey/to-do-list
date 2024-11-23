@@ -8,14 +8,14 @@ export default {
       medium: "yellow",
       high: "#a80000",
       transparent: "transparent",
-      first: "#38404B",
-      second: "#94ADCF",
-      third: "#7588a3",
+      primary: "#38404B",
+      secondary: "#94ADCF",
+      thirdly: "#7588a3",
     },
     extend: {
       boxShadow: {
-        primary: "0px 0px 6px 4px rgba(148, 173, 207, 0.5)",
-        secondary: "0px 0px 6px 4px rgba(148, 173, 207, 0.1)",
+        active: "0px 0px 6px 4px rgba(148, 173, 207, 0.5)",
+        disabled: "0px 0px 6px 4px rgba(148, 173, 207, 0.1)",
       },
       gridTemplateColumns: {
         form: "1fr 3fr 1fr",
