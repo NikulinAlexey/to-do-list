@@ -4,7 +4,7 @@ export const priorityTag = createSlice({
   name: "priorityTag",
   initialState: "all-priorities",
   reducers: {
-    refreshPriorityTag: (state, action) => {
+    refreshPriorityTag: (_state, action) => {
       return action.payload;
     },
   },

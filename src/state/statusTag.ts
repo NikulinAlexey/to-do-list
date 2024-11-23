@@ -4,7 +4,7 @@ export const statusTag = createSlice({
   name: "currentTag",
   initialState: "all",
   reducers: {
-    refreshStatusTag: (state, action) => {
+    refreshStatusTag: (_state, action) => {
       return action.payload;
     },
   },
