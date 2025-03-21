@@ -1,71 +1,56 @@
-import { useState } from "react";
 import { RootState } from "../state/store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { cn } from "../libs/utils";
-import { FilterProps } from "../types";
+import { refreshStatusTag } from "../state/filterSlice";
 
-function StatusFilter({ onFilter }: FilterProps) {
-  const tasks = useSelector((state: RootState) => state.tasks);
-  const statusTag = useSelector((state: RootState) => state.statusTag);
-  const priorityTag = useSelector((state: RootState) => state.priorityTag);
-  const [activeBtn, setActiveBtn] = useState(statusTag);
+function StatusFilter() {
+  const dispatch = useDispatch();
 
-  function setActiveTab(tag: string) {
-    setActiveBtn(tag);
-    onFilter(tasks, tag, priorityTag);
-  }
+  const statusTag = useSelector(
+    (state: RootState) => state.filterSlice.statusTag,
+  );
+
+  const statusFilters = [
+    {
+      id: "all",
+      "aria-label": "Все задания",
+      text: "Все",
+    },
+    {
+      id: "active",
+      "aria-label": "Активные задания",
+      text: "Активные",
+    },
+    {
+      id: "finished",
+      "aria-label": "Завершенные задания",
+      text: "Завершенные",
+    },
+  ];
 
   return (
     <ul className="flex flex-wrap items-center gap-x-2 justify-center">
-      <li>
-        <button
-          id="all"
-          aria-label="Все задания"
-          onClick={(event) => setActiveTab(event.currentTarget.id)}
-          type="button"
-          className={cn(
-            "p-2 font-semibold border-2 border-transparent rounded-tl-md rounded-tr-md h-full lg:hover:border-b-thirdly lg:transition-colors lg:active:!border-thirdly",
-            {
-              "border-b-secondary": activeBtn === "all",
+      {statusFilters.map((filter) => (
+        <li key={filter.id}>
+          <button
+            id={filter.id}
+            type="button"
+            onClick={(event) =>
+              dispatch(refreshStatusTag(event.currentTarget.id))
             }
-          )}
-        >
-          Все
-        </button>
-      </li>
-      <li>
-        <button
-          id="active"
-          aria-label="Активные задания"
-          onClick={(event) => setActiveTab(event.currentTarget.id)}
-          type="button"
-          className={cn(
-            "p-2 font-semibold border-2 border-transparent rounded-tl-md rounded-tr-md h-full lg:hover:border-b-thirdly lg:transition-colors lg:active:!border-thirdly",
-            {
-              "border-b-secondary": activeBtn === "active",
-            }
-          )}
-        >
-          Активные
-        </button>
-      </li>
-      <li>
-        <button
-          id="finished"
-          aria-label="Завершенные задания"
-          onClick={(event) => setActiveTab(event.currentTarget.id)}
-          type="button"
-          className={cn(
-            "p-2 font-semibold border-2 border-transparent rounded-tl-md rounded-tr-md h-full lg:hover:border-b-thirdly lg:transition-colors lg:active:!border-thirdly",
-            {
-              "border-b-secondary": activeBtn === "finished",
-            }
-          )}
-        >
-          Завершенные
-        </button>
-      </li>
+            aria-label={filter["aria-label"]}
+            className={cn(
+              "p-2 font-semibold border-2 border-transparent rounded-tl-md rounded-tr-md h-full lg:hover:border-b-thirdly lg:transition-colors lg:active:!border-thirdly",
+              {
+                "border-b-secondary": String(statusTag) === filter.id,
+              },
+            )}
+          >
+            {filter.text}
+          </button>
+        </li>
+      ))}
     </ul>
   );
 }

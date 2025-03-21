@@ -1,26 +1,51 @@
-import { SelectProps } from "../types";
+interface SelectProps {
+  value: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+const optionList = [
+  {
+    value: "normal",
+    text: "Обычный",
+    "aria-label": "Обычный приоритет",
+  },
+  {
+    value: "medium",
+    text: "Средний",
+    "aria-label": "Средний приоритет",
+  },
+  {
+    value: "high",
+    text: "Высокий",
+    "aria-label": "Высокий приоритет",
+  },
+];
 
 function Select({ value, handleChange }: SelectProps) {
   return (
     <select
-      aria-label="Выбрать приоритет"
+      value={value}
       name="priority"
       id="priority-select"
-      value={value}
-      onChange={(e) => handleChange(e.target.value)}
+      aria-label="Выбрать приоритет"
+      onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+        handleChange(event)
+      }
       className="border rounded-md bg-transparent p-2"
     >
-      <option value="normal" className="bg-primary" aria-label="Обычный приоритет">
-        Обычный
-      </option>
-      <option value="medium" className="bg-primary" aria-label="Средний приоритет">
-        Средний
-      </option>
-      <option value="high" className="bg-primary" aria-label="Высокий приоритет">
-        Высокий
-      </option>
+      {optionList.map((optionItem, i) => (
+        <option
+          key={i}
+          value={optionItem.value}
+          className="bg-primary"
+          aria-label={optionItem["aria-label"]}
+        >
+          {optionItem.text}
+        </option>
+      ))}
     </select>
   );
 }
 
 export default Select;
+
+

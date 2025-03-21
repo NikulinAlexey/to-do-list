@@ -12,10 +12,10 @@ function PriorityMark({ priority, className }: PriorityMarkProps) {
         "absolute block w-3 inset-y-0 bg-all-priorities",
         className,
         {
-          "bg-normal": priority === "normal",
-          "bg-medium": priority === "medium",
           "bg-high": priority === "high",
-        }
+          "bg-medium": priority === "medium",
+          "bg-normal": priority === "normal",
+        },
       )}
     ></span>
   );

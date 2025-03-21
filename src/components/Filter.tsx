@@ -1,13 +1,11 @@
-import { FilterProps } from "../types";
-import PriorityFilter from "./PriorityFilter";
 import StatusFilter from "./StatusFilter";
+import PriorityFilter from "./PriorityFilter";
 
-function Filter({ onFilter }: FilterProps) {
-
+function Filter() {
   return (
     <div className="flex flex-col gap-y-1 justify-center px-4">
-      <StatusFilter onFilter={onFilter} />
-      <PriorityFilter onFilter={onFilter} />
+      <StatusFilter />
+      <PriorityFilter />
     </div>
   );
 }

@@ -1,34 +1,28 @@
-import { cn } from "../libs/utils";
-import { TaskProps } from "../types";
+import { useRef } from "react";
+import { cn, formateTime } from "../libs/utils";
 import { useDispatch } from "react-redux";
-import { deleteTask, finishTask } from "../state/taskListSlice";
+import { ITask } from "../types/taskTypes/ITask";
+import {finishTask} from "../state/taskSlice";
+import { deleteTask, toggleTask } from "../api/tasksApi";
 
+import Input from "./Input";
 import SvgIcon from "./SvgIcon";
 import PriorityMark from "./PriorityMark";
-import { useRef } from "react";
 
-export interface TaskItemProps {
-  taskItem: TaskProps;
+interface TaskItemProps {
+  taskItem: ITask;
 }
 
 function Task({ taskItem }: TaskItemProps) {
   const { text, priority, finished, id, createdAt } = taskItem;
+  const formattedTime = formateTime(createdAt);
   const dispatch = useDispatch();
   const taskRef = useRef<HTMLDivElement>(null);
 
-  function handleDeleteTask() {
-    const taskElement = taskRef.current;
-
-    if (taskElement) {
-      const taskHeight = taskElement.offsetHeight;
-
-      taskElement.className =
-        "-z-[1] opacity-0 invisible grow pointer-events-none relative bg-primary rounded-2xl shadow-active overflow-hidden w-full transition-[transform,visibility,box-shadow,opacity,margin-top] duration-300";
-      taskElement.style.marginTop = `-${taskHeight+24}px`;
-      setTimeout(() => dispatch(deleteTask(id)), 300);
-    }
-  }
-
+const handleDelete = (taskId: string) => {
+  deleteTask(dispatch, taskId);
+  console.log('Удаление в Task.tsx')
+};
   return (
     <div
       ref={taskRef}
@@ -41,25 +35,23 @@ function Task({ taskItem }: TaskItemProps) {
       <div className="flex flex-col gap-x-2 gap-y-4 pl-6 py-3 pr-3">
         <p className="text-lg break-words">{text}</p>
         <div className="flex flex-col items-start sm:flex-row sm:justify-between sm:items-center min-h-6 gap-y-1 gap-x-8">
-          <p className="h-full text-xs text-[gray]">{createdAt}</p>
+          <p className="h-full text-xs text-[gray]">{formattedTime}</p>
           <div className="text-thirdly w-full flex text-sm shrink-0 gap-4 sm:w-fit h-full items-center justify-end">
             <label className="flex items-center gap-2 cursor-pointer select-none h-full lg:hover:opacity-80 active:!opacity-50 transition-opacity">
               {finished ? "Сделать активным" : "Завершить"}
-              <input
-                aria-label="Отметить задание как выполненное"
-                checked={finished}
+              <Input
                 type="checkbox"
+                checked={finished}
                 className="h-6 w-6 cursor-pointer"
-                onChange={() =>
-                  dispatch(finishTask({ id, finished: !finished }))
-                }
+                aria-label="Отметить задание как выполненное"
+                handleChange={() => toggleTask(dispatch, id, !finished )}
               />
             </label>
             <button
               type="button"
-              className="w-6 h-6 lg:hover:opacity-80 active:!opacity-50 transition-opacity"
+              onClick={() => handleDelete(id)}
               aria-label="Удалить задание"
-              onClick={handleDeleteTask}
+              className="w-6 h-6 lg:hover:opacity-80 active:!opacity-50 transition-opacity"
             >
               <SvgIcon name="trash" />
             </button>
